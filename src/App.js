@@ -3,7 +3,7 @@ import './App.css';
 import { useEffect, useState} from "react";
 
 function App() {
-	const [data, setData] = useState([{}]);
+	const [data, setData] = useState([]);
 
 	useEffect(() => 
   {
@@ -15,20 +15,51 @@ function App() {
       if (response.ok) 
       {
 		    const result = await response.json();
-        console.log(result.Grants.Grant);
+        // console.log(result.Grants.Grant);
 
-        setData(result.data);
+        setData(result.Grants.Grant);
       }
 		}
 		fetchData();
 
-	}, [data]);
+	}, []);
   
-// function TableRow(props){
-// 
-// }
+function TableRow(grant){
+  return (
+    <tr>
+      <td>{grant.grant.ProjectTitle}</td>
+      <td>{grant.grant.Institution}</td>
+    </tr>
+  );
+}
 
+function Table({grants}){
+  return(
+    <table border= {2}>
+      <thead>
+          <tr>
+            <th>
+              Grant Project
+            </th>
+            <th>
+              Institution
+            </th>
+          </tr>
+        </thead>
+        
+        <tbody> 
+          {grants.map((grant, index) =>
+          
+            <TableRow key = {index}
+                      grant = {grant}
+            />
+          )}
 
+        </tbody>
+    </table>
+
+  )
+}
 
   return (
     <div className="App">
@@ -47,29 +78,7 @@ function App() {
         </a>
 
       </header> */}
-      
-      <table>
-        <thead>
-          <tr>
-            <th>
-              Grant Project
-            </th>
-            <td>
-               - Institution
-            </td>
-          </tr>
-        </thead>
-        
-        <tbody> 
-          {/*Grant information Here */}
-
-          
-
-        </tbody>
-      </table>
-
-
-
+      <Table grants = {data}/>
     </div>
   );
 }
