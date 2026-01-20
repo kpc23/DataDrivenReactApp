@@ -1,5 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
+import './Table.css';
 import { useEffect, useState} from "react";
 
 function App() {
@@ -27,22 +28,42 @@ function App() {
 function TableRow(grant){
   return (
     <tr>
+      <td>{grant.grant.InstCity}</td>
+      <td>{grant.grant.Division}</td>
       <td>{grant.grant.ProjectTitle}</td>
       <td>{grant.grant.Institution}</td>
+      <td>{grant.grant.PrimaryDiscipline}</td>
+      <td>{grant.grant.ProjectDesc}</td>
+      <td>{grant.grant.YearAwarded}</td>
     </tr>
   );
 }
 
 function Table({grants}){
   return(
-    <table border= {2}>
+    <table border= {1}>
       <thead>
           <tr>
+            <th>
+              City
+            </th>
+            <th>
+              Division
+            </th>
             <th>
               Grant Project
             </th>
             <th>
               Institution
+            </th>
+            <th>
+              Primary Discipline
+            </th>
+            <th>
+              Project Description
+            </th>
+            <th>
+              Year Awarded
             </th>
           </tr>
         </thead>
