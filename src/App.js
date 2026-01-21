@@ -10,7 +10,8 @@ function App() {
   const [filterInstitutions, setFilterInstitutions] = useState(""); //1. filter by being able to search up instiutions.
   const [filterDiscipline, setFilterDiscipline] = useState("") //2. filter discipline
   const [sortData, setSortData] = useState(false);//3. sort project title from a-z
-    
+  const [filterProgram, setfilterProgram] = useState("") //4. filter program
+
   //1. Grabs data, also setting the copy.
 	useEffect(() => 
   {
@@ -72,10 +73,16 @@ function App() {
   
       }
   )}
+  //3. filter though a drop down of disciplines
+    if(filterProgram.length > 0)
+    {
+      copiedData = copiedData.filter(grant => grant.Program === filterProgram
+      );
+    }
     setUpdatedData(copiedData);
 
 
-  }, [filterInstitutions, filterDiscipline, sortData, data])
+  }, [filterInstitutions, filterDiscipline, sortData, filterProgram, data])
 
   
   function TableRow(grant){
@@ -191,6 +198,20 @@ function App() {
       <button onClick={() => setSortData(!sortData)}>
         {sortData ? "Sorted!!" : "Sort Project Title Alphabetically"}
       </button>
+
+      <label>
+        Choose Program Type:
+          <select value={filterProgram} onChange={(e) => setfilterProgram(e.target.value)}>
+              <option value ="">Every Option</option>
+              <option value ="Infrastructure and Capacity Building Challenge Grants">Infrastructure and Capacity Building Challenge Grants</option>
+              <option value ="Fellowships">Fellowships</option>
+              <option value ="Awards for Faculty">Awards for Faculty</option>
+              <option value ="State Humanities Councils General Operating Support Grants">State Humanities Councils General Operating Support Grants</option>
+          </select>
+      </label>
+
+
+
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
