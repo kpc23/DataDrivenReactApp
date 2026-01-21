@@ -10,7 +10,7 @@ function App() {
   const [filterInstitutions, setFilterInstitutions] = useState(""); //1. filter by being able to search up instiutions.
   const [filterDiscipline, setFilterDiscipline] = useState("") //2. filter discipline
   const [sortData, setSortData] = useState(false);//3. sort project title from a-z
-  const [sortCity, setSortCity] = useState(false);//5. sort project cities from a-z
+  const [sortCity, setSortCity] = useState(false);//6?. sort project cities from a-z
 
   const [filterProgram, setfilterProgram] = useState("") //4. filter program
 
@@ -113,7 +113,7 @@ function App() {
     setFilterInstitutions(""); //1. filter by being able to search up instiutions.
     setFilterDiscipline("") //2. filter discipline
     setSortData(false);//3. sort project title from a-z
-    setSortCity(false);//3. sort project title from a-z
+    setSortCity(false);//6 sort city  from a-z
 
     setfilterProgram("") //4. filter program
     
