@@ -6,7 +6,10 @@ import { useEffect, useState} from "react";
 function App() {
 	const [data, setData] = useState([]);
   /*New consts useState for filtering and sorting*/
-  const [updatedData, setUpdatedData] = useState(data);
+  const [updatedData, setUpdatedData] = useState([]); //copy of data
+  const [filterInstitutions, setFilterInstitutions] = useState(""); //1. filter by being able to search up instiutions.
+
+  //1. Grabs data, also setting the copy.
 	useEffect(() => 
   {
 		async function fetchData()
@@ -17,17 +20,24 @@ function App() {
       if (response.ok) 
       {
 		    const result = await response.json();
-        let finalresult=result.Grants.Grant;
-        setData(finalresult);
-        setUpdatedData(finalresult)
+        let finalResult=result.Grants.Grant;
+        setData(finalResult);
+        setUpdatedData(finalResult)
       }
 		}
 		fetchData();
 
 	}, []);
 
-  // const restoreData = (data) =>
+  // filter and sort
 
+  useEffect(()=>{
+    //1. filter through and find the name of institution, ANY CAPS friendly
+    let filteredData = [...data].filter(grant => 
+      grant.Institution.toLowerCase().includes(filterInstitutions.toLowerCase()
+    ));
+    setUpdatedData(filteredData);
+  }, [filterInstitutions, data])
 
   
   function TableRow(grant){
@@ -95,14 +105,12 @@ function App() {
 
   return (
     <div className="App">
-      {/* <label>	useEffect(() => 
-  {
-
+      <label>
         Filter by Institution:
-        <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)}
+        <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
         placeholder='Name of Institution'
         />
-      </label> */}
+      </label>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
