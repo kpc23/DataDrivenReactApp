@@ -61,6 +61,14 @@ function App() {
           <h1>
           Grant Information
           </h1>
+          <label>
+            Filter by Institution:
+            <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
+              placeholder='Name of Institution'
+            />
+          </label>
+        
+        
         </caption>
 
         <thead>
@@ -105,12 +113,6 @@ function App() {
 
   return (
     <div className="App">
-      <label>
-        Filter by Institution:
-        <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
-        placeholder='Name of Institution'
-        />
-      </label>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
