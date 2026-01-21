@@ -73,7 +73,7 @@ function App() {
   
       }
   )}
-  //3. filter though a drop down of disciplines
+  //4. filter though a drop down of program types
     if(filterProgram.length > 0)
     {
       copiedData = copiedData.filter(grant => grant.Program === filterProgram
@@ -84,11 +84,19 @@ function App() {
 
   }, [filterInstitutions, filterDiscipline, sortData, filterProgram, data])
 
-  
+  //#5. component that resets all filters to original state.
+  function resetUpdates(){
+    setUpdatedData(data); //copy of data
+    setFilterInstitutions(""); //1. filter by being able to search up instiutions.
+    setFilterDiscipline("") //2. filter discipline
+    setSortData(false);//3. sort project title from a-z
+    setfilterProgram("") //4. filter program
+    
+  }
   function TableRow(grant){
     return (
       <tr>
-        <td title = {grant.grant.InstState}>{grant.grant.InstCity}</td>
+        <td title = {grant.grant.InstState} style={{ cursor:"pointer"}}>{grant.grant.InstCity}</td>
         <td>{grant.grant.Division}</td>
         <td>{grant.grant.ProjectTitle}</td>
         <td>{grant.grant.Institution}</td>
@@ -150,6 +158,7 @@ function App() {
 
   return (
     <div className="App">
+      <button onClick={resetUpdates}> Reset Filters</button>
       <label>
         Filter by Institution:
           <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
