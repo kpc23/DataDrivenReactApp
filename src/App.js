@@ -10,6 +10,8 @@ function App() {
   const [filterInstitutions, setFilterInstitutions] = useState(""); //1. filter by being able to search up instiutions.
   const [filterDiscipline, setFilterDiscipline] = useState("") //2. filter discipline
   const [sortData, setSortData] = useState(false);//3. sort project title from a-z
+  const [sortCity, setSortCity] = useState(false);//5. sort project cities from a-z
+
   const [filterProgram, setfilterProgram] = useState("") //4. filter program
 
   //1. Grabs data, also setting the copy.
@@ -79,10 +81,31 @@ function App() {
       copiedData = copiedData.filter(grant => grant.Program === filterProgram
       );
     }
+
+     //6. sort project cities a-z
+    if(sortCity)
+    {
+      copiedData.sort((a,b) => 
+      {
+        let caseA = a.InstCity.toLowerCase();
+        let caseB = b.InstCity.toLowerCase();
+        if(caseA < caseB)
+        {
+          return -1;
+        }
+        if(caseA > caseB)
+        {
+          return 1;
+        }
+        
+        return 0;
+  
+      }
+  )}
     setUpdatedData(copiedData);
 
 
-  }, [filterInstitutions, filterDiscipline, sortData, filterProgram, data])
+  }, [filterInstitutions, filterDiscipline, sortData, filterProgram, sortCity, data])
 
   //#5. component that resets all filters to original state.
   function resetUpdates(){
@@ -90,6 +113,8 @@ function App() {
     setFilterInstitutions(""); //1. filter by being able to search up instiutions.
     setFilterDiscipline("") //2. filter discipline
     setSortData(false);//3. sort project title from a-z
+    setSortCity(false);//3. sort project title from a-z
+
     setfilterProgram("") //4. filter program
     
   }
@@ -158,68 +183,72 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={resetUpdates}> Reset Filters</button>
-      <label>
-        Filter by Institution:
-          <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
-              placeholder='Name of Institution'
-          />
-      </label>
-      <label>
-        Filter by Disciplines:
-          <select value={filterDiscipline} onChange={(e) => setFilterDiscipline(e.target.value)}>
-              <option value ="">Every Option</option>
-              <option value ="African American History">African American History</option>
-              <option value ="African Studies">African Studies</option>
-              <option value ="American Literature">American Literature</option>
-              <option value ="Art History and Criticism">Art History and Criticism</option>
-              <option value ="British Literature">British Literature</option>
-             
-              <option value ="Classical History	">Classical History	</option>
-              <option value ="Communications">Communications</option>
-              <option value ="Cultural History">Cultural History</option>
+      <div className="Components">
+        <button onClick={resetUpdates}> Reset Filters</button>
+        <button onClick={() => setSortData(!sortData)}>
+          {sortData ? "Sorted!!" : "Sort Project Title Alphabetically"}
+        </button>
 
-              <option value ="Film History and Criticism">Film History and Criticism</option>
-              <option value ="History of Science">History of Science</option>
-              <option value ="Immigration History">Immigration History</option>
-              <option value ="Interdisciplinary Studies, Other">Interdisciplinary Studies, Other</option>
-              <option value ="Italian Literature">Italian Literature</option>
-              <option value ="Latin American History">Latin American History</option>
-              <option value ="Latino History">Latino History</option>
-              <option value ="Literary Criticism">Literary Criticism</option>
-              <option value ="Literature, General">Literature, General</option>
-                            
-              <option value ="Medieval History">Medieval History</option>
-              <option value ="Near and Middle Eastern History">Near and Middle Eastern History</option>
+        <button onClick={() => setSortCity(!sortCity)}>
+          {sortCity ? "Sorted!!" : "Sort Cities Alphabetically"}
+        </button>
+        <label>
+          Filter by Institution:
+            <input type="text" value={filterInstitutions} onChange={(e) => setFilterInstitutions(e.target.value)}
+                placeholder='Name of Institution'
+            />
+        </label>
+        <label>
+          Filter by Disciplines:
+            <select value={filterDiscipline} onChange={(e) => setFilterDiscipline(e.target.value)}>
+                <option value ="">Every Option</option>
+                <option value ="African American History">African American History</option>
+                <option value ="African Studies">African Studies</option>
+                <option value ="American Literature">American Literature</option>
+                <option value ="Art History and Criticism">Art History and Criticism</option>
+                <option value ="British Literature">British Literature</option>
+              
+                <option value ="Classical History	">Classical History	</option>
+                <option value ="Communications">Communications</option>
+                <option value ="Cultural History">Cultural History</option>
 
-              <option value ="Philosophy, General">Philosophy, General</option>
-              <option value ="Political Theory">Political Theory</option>              
+                <option value ="Film History and Criticism">Film History and Criticism</option>
+                <option value ="History of Science">History of Science</option>
+                <option value ="Immigration History">Immigration History</option>
+                <option value ="Interdisciplinary Studies, Other">Interdisciplinary Studies, Other</option>
+                <option value ="Italian Literature">Italian Literature</option>
+                <option value ="Latin American History">Latin American History</option>
+                <option value ="Latino History">Latino History</option>
+                <option value ="Literary Criticism">Literary Criticism</option>
+                <option value ="Literature, General">Literature, General</option>
+                              
+                <option value ="Medieval History">Medieval History</option>
+                <option value ="Near and Middle Eastern History">Near and Middle Eastern History</option>
 
-              <option value ="Renaissance History">Renaissance History</option>
-              <option value ="South Asian Studies">South Asian Studies	</option>
-              <option value ="Theater History and Criticism">Theater History and Criticism</option>
-              <option value ="U.S. History">U.S. History</option>
-              <option value ="Women's History">Women's History</option>
+                <option value ="Philosophy, General">Philosophy, General</option>
+                <option value ="Political Theory">Political Theory</option>              
 
-          </select>
+                <option value ="Renaissance History">Renaissance History</option>
+                <option value ="South Asian Studies">South Asian Studies	</option>
+                <option value ="Theater History and Criticism">Theater History and Criticism</option>
+                <option value ="U.S. History">U.S. History</option>
+                <option value ="Women's History">Women's History</option>
+
+            </select>
+          </label>
+
+          <label>
+          Choose Program Type: 
+            <select value={filterProgram} onChange={(e) => setfilterProgram(e.target.value)}>
+                <option value ="">Every Option</option>
+                <option value ="Infrastructure and Capacity Building Challenge Grants">Infrastructure and Capacity Building Challenge Grants</option>
+                <option value ="Fellowships">Fellowships</option>
+                <option value ="Awards for Faculty">Awards for Faculty</option>
+                <option value ="State Humanities Councils General Operating Support Grants">State Humanities Councils General Operating Support Grants</option>
+            </select>
         </label>
 
-      <button onClick={() => setSortData(!sortData)}>
-        {sortData ? "Sorted!!" : "Sort Project Title Alphabetically"}
-      </button>
-
-      <label>
-        Choose Program Type:
-          <select value={filterProgram} onChange={(e) => setfilterProgram(e.target.value)}>
-              <option value ="">Every Option</option>
-              <option value ="Infrastructure and Capacity Building Challenge Grants">Infrastructure and Capacity Building Challenge Grants</option>
-              <option value ="Fellowships">Fellowships</option>
-              <option value ="Awards for Faculty">Awards for Faculty</option>
-              <option value ="State Humanities Councils General Operating Support Grants">State Humanities Councils General Operating Support Grants</option>
-          </select>
-      </label>
-
-
+        </div>
 
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
